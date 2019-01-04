@@ -1,0 +1,52 @@
+SQL> create table userrole (username varchar2(20),password varchar2(12),RoleCode varchar2(10));
+
+Table created.
+
+SQL> alter table userrole add primary key(username);
+
+Table altered.
+
+SQL> desc userrole
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ USERNAME                                  NOT NULL VARCHAR2(20)
+ PASSWORD                                           VARCHAR2(12)
+ ROLECODE                                           VARCHAR2(10)
+
+SQL> create table account (Accountnumber number(10),InsuredName varchar2(30),InsuredStreet varchar2(40),
+InsuredCity varchar2(15),InsuredState varchar2(15),InsuredZip number(5),BusinessSegment varchar2(30),
+username varchar2(20),Primary Key(Accountnumber),Foreign Key(UserName) references userrole(username));
+
+SQL> desc account;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ACCOUNTNUMBER                             NOT NULL NUMBER(10)
+ INSUREDNAME                                        VARCHAR2(30)
+ INSUREDSTREET                                      VARCHAR2(40)
+ INSUREDCITY                                        VARCHAR2(15)
+ INSUREDSTATE                                       VARCHAR2(15)
+ INSUREDZIP                                         NUMBER(5)
+ BUSINESSSEGMENT                                    VARCHAR2(30)
+ USERNAME                                           VARCHAR2(20)
+
+SQL>SQL> create table policy(policynumber number(10),policypremimum number(8,2),accountnumber number(10),Primary key(policynumber),foreign key(accountnumber) references account(accountnumber));
+
+Table created.
+SQL> desc policy;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ POLICYNUMBER                              NOT NULL NUMBER(10)
+ POLICYPREMIMUM                                     NUMBER(8,2)
+ ACCOUNTNUMBER                                      NUMBER(10)
+
+
+SQL> create table policyDetails(policyNumber number(10),questionId varchar2(15),answer varchar2(30),foreign key(policynumber) references policy(policyNumber));
+
+Table created.
+
+SQL> desc policyDetails;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ POLICYNUMBER                                       NUMBER(10)
+ QUESTIONID                                         VARCHAR2(15)
+ ANSWER                                             VARCHAR2(30)
